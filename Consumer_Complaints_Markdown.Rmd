@@ -45,6 +45,12 @@ Then I decided to take a look at the companies that lack timely responses, as if
 complaints %>% filter(timely_response == "No") %>% 
   count(company, sort = TRUE)
 
+
+complaints_responses <- head(complaints %>% filter(timely_response == "No") %>% 
+  count(company, sort = TRUE))
+
+complaints_responses
+
 ```
 Next, I did a count to see where the most complaints come from. It would be interesting to compare these numbers to the relative population. 
 
@@ -52,6 +58,20 @@ Next, I did a count to see where the most complaints come from. It would be inte
 
 complaints %>% 
   count(state, sort = TRUE)
+
+
+complaints_states <- head(complaints %>% count(state, sort = TRUE))
+
+complaints_states
+
+ggplot(complaints_states , aes(x=state , y=n, width=.25)) + geom_bar(stat="identity", color="#9ebcda", fill= "#9ebcda") +
+  scale_y_discrete(name="Testing") +
+  scale_x_discrete(name="Testing 2") +
+  labs(title = "Testing Title", 
+       caption = "By Jack Wild") +
+  geom_text(stat="identity", label=complaints_states$n, vjust= 1, size=3)
+
+
 
 ```
 
