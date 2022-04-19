@@ -4,7 +4,7 @@ author: "Jack Wild"
 date: "4/18/2022"
 output: html_document
 ---
-
+First I loaded all my packages in, as well as the dataset. 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
@@ -21,22 +21,54 @@ head(complaints)
 
 ```
 
-## R Markdown
+Next, I first did a count to see which type of product received the most complaints. I then found that subproduct was more digestible. 
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+```{r}
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+complaints %>% count(product, sort = TRUE)
 
-```{r cars}
-summary(cars)
+complaints %>% count(sub_product, sort = TRUE)
+
 ```
 
-## Including Plots
+Next, I did a count to see which company had the most complaints filed against them. 
 
-You can also embed plots, for example:
+```{r}
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+complaints %>% count(company, sort = TRUE)
+
+```
+Then I decided to take a look at the companies that lack timely responses, as if I were a consumer, I would want to know that information. 
+
+```{r}
+
+complaints %>% filter(timely_response == "No") %>% 
+  count(company, sort = TRUE)
+
+```
+Next, I did a count to see where the most complaints come from. It would be interesting to compare these numbers to the relative population. 
+
+```{r}
+
+complaints %>% 
+  count(state, sort = TRUE)
+
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+Then, I tried to make a chart to show how the number of complaints has changed over time. Unfortunately it didn't look to great and I was haviong trouble changing the date labels so I decided not to include this on my flexdashboard. 
+
+```{r}
+
+complaints_year <- complaints %>% count(mm_yy_received, sort = TRUE)
+
+complaints_year
+
+ggplot(complaints_year , aes(x=mm_yy_received , y=n, width=.25)) +
+  geom_bar(stat="identity", color="#9ebcda", fill= "#9ebcda") +
+  scale_y_discrete(name="Testing") +
+  scale_x_discrete(name="Testing 2") +
+  labs(title = "Testing Title", 
+       caption = "By Jack Wild") +
+  geom_text(stat="identity", label=complaints_year$n, vjust= .5, size=.5)
+
+```
