@@ -130,7 +130,7 @@ The data used in the tables and visualizations is from 2020 and can be used to u
 
 1) Which "products" or services receive the most complaints from consumers (table 1). This table used the sub-categories to show a more detailed picture of the nature of complaints in 2020. As shown by the table, "credit reporting" was the category of service/product that had the greatest number of complaints. 
 
-2) Table 2 shows which companies had the greatest number the "late" or untimely responses to consumers. This is an important issue to examine because as a consumer, you want to know that—at the very least—you can rely on on companies to provide a timely response. As you can see Xerox is the company with the most untimely responses. 
+2) Table 2 shows which companies had the greatest number of "late" or untimely responses to consumers. This is an important issue to examine because as a consumer, you want to know that—at the very least—you can rely on on companies to provide a timely response. As you can see Xerox is the company with the most untimely responses. 
 
 3) The Linebar shows the overall number of complaints that were received each month during 2020. As the graph shows, December is the month with the most overall complaints, which seems to make sense, as it's the end of the year and the time when Americans spend the most money! 
 
