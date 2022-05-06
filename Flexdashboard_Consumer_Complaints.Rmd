@@ -1,0 +1,105 @@
+---
+title: "Consumer Complaints"
+author: "Jack Wild"
+date: "5/06/2022"
+output:
+  flexdashboard::flex_dashboard:
+    theme:
+      version: 4
+    orientation: rows
+    vertical_layout: fill
+    
+---
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(echo = FALSE)
+
+library(tidyverse) #includes ggplot2
+library(janitor) 
+library(scales)
+library(lubridate)
+library(ggthemes)
+library(dplyr)
+library(remotes)
+
+complaints <- read_rds("complaints.rds")
+
+head(complaints)
+
+```
+
+Page 1 
+=======================================================================
+Column {data-width=650}
+-----------------------------------------------------------------------
+
+### Type of products receiving the most complaints
+
+
+```{r}
+
+complaints_sub <- complaints %>% count(sub_product, sort = TRUE)
+
+head(complaints_sub)
+
+```
+
+
+### Companies that failed to provide timely responses to complaints
+
+```{r}
+
+complaints_responses <- head(complaints %>% filter(timely_response == "No") %>% 
+  count(company, sort = TRUE))
+
+head(complaints_responses)
+
+```
+
+Column {data-width=650}
+-----------------------------------------------------------------------
+
+### States with the most complaints
+
+```{r}
+
+dates <- complaints %>% count(mm_yy_received)
+
+dates
+
+testing_labels <- c("Mar","Apr","May","June","July","Aug","Sept","Oct","Nov","Dec")
+
+ggplot(data=dates, aes(x=mm_yy_received, y=n, group=1)) +
+  geom_line(color="#9ebcda")+
+  geom_point() +
+  scale_y_continuous(labels = unit_format(unit = "K", scale = 1e-3), 
+                     name = "testing123") +
+  scale_x_discrete(labels = testing_labels)
+
+
+```
+
+
+### Pie Chart showing the states with the most complaints
+
+```{r}
+
+complaints_states <- head(complaints %>% count(state, sort = TRUE))
+
+ggplot(complaints_states, aes(x = state, y=n, fill = state)) +
+  geom_col(color = "black") +
+  geom_text(aes(label = state),
+            position = position_stack(vjust = 0.5)) +
+  coord_polar(theta = "x")
+
+
+```
+
+Page 2 
+=======================================================================
+
+Column {data-width=650}
+-----------------------------------------------------------------------
+
+### TKTKTKTKTKTKTK
